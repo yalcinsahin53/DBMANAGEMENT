@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Dbmanagement app
 
 ## Run the app
@@ -59,3 +60,6 @@ flet build windows -v
 ```
 
 For more details on building Windows package, refer to the [Windows Packaging Guide](https://docs.flet.dev/publish/windows/).
+=======
+# DBMANAGEMENT
+>>>>>>> 20458706f842f985a2206a7e50240fb12ed835fa
