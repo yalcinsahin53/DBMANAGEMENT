@@ -142,10 +142,22 @@ def _bootstrap_local_api(page: ft.Page, dialog: DialogService) -> None:
 
 
 def main(page: ft.Page):
+    # Ana tema renkleri (mavi-yesil-beyaz)
+    PRIMARY_BLUE = "#0B5ED7"
+    DEEP_BLUE = "#0A3D91"
+    PRIMARY_GREEN = "#12B886"
+    MINT_BG = "#E9F9F3"
+    SURFACE = "#FFFFFF"
+    BACKGROUND = "#F4FAFF"
+    BORDER_SOFT = "#D3E6F5"
+    TEXT_DARK = "#11324D"
+
     page.title = "Database Management"
-    page.bgcolor = ft.Colors.WHITE
+    page.bgcolor = BACKGROUND
     page.padding = 0
     page.spacing = 0
+    page.theme_mode = ft.ThemeMode.LIGHT
+    page.theme = ft.Theme(color_scheme_seed=PRIMARY_BLUE)
 
     # pencere
     page.window.width = 1280
@@ -169,20 +181,25 @@ def main(page: ft.Page):
     _bootstrap_local_api(page, page.dialog_service)
 
     # content host
-    content_host = ft.Container(expand=True, padding=16)
+    content_host = ft.Container(
+        expand=True,
+        padding=18,
+        bgcolor=SURFACE,
+    )
     current_page_text = ft.Text(
         "Anasayfa",
-        size=13,
+        size=14,
         weight=ft.FontWeight.BOLD,
+        color=TEXT_DARK,
         selectable=True,
     )
     current_page_bar = ft.Container(
-        padding=ft.Padding.only(left=20, right=20, top=10, bottom=10),
-        bgcolor=ft.Colors.BLUE_GREY_50,
-        border=ft.border.only(bottom=ft.BorderSide(1, ft.Colors.BLACK12)),
+        padding=ft.Padding.only(left=20, right=20, top=11, bottom=11),
+        bgcolor=MINT_BG,
+        border=ft.Border.only(bottom=ft.BorderSide(1, BORDER_SOFT)),
         content=ft.Row(
             controls=[
-                # ft.Text("Aktif Sayfa:", weight=ft.FontWeight.BOLD),
+                ft.Icon(ft.Icons.LABEL, size=16, color=PRIMARY_GREEN),
                 current_page_text,
             ],
             alignment=ft.MainAxisAlignment.CENTER,
@@ -209,12 +226,14 @@ def main(page: ft.Page):
             if "must be added to the page first" not in str(ex).lower():
                 raise
 
-    active_db_text = ft.Text("", size=12, weight=ft.FontWeight.BOLD)
-    active_schema_text = ft.Text("", size=12, weight=ft.FontWeight.BOLD)
+    active_db_text = ft.Text("", size=12, weight=ft.FontWeight.BOLD, color=DEEP_BLUE)
+    active_schema_text = ft.Text(
+        "", size=12, weight=ft.FontWeight.BOLD, color=DEEP_BLUE
+    )
     active_warn_text = ft.Text(
-        "Veritabantisi ve Sema Secimi Yapiniz!",
+        "Veritabani ve Sema Secimi Yapiniz!",
         size=12,
-        color=ft.Colors.RED_700,
+        color=ft.Colors.RED_800,
         weight=ft.FontWeight.BOLD,
         visible=True,
     )
@@ -778,8 +797,38 @@ def main(page: ft.Page):
     )
 
     page.drawer = ft.NavigationDrawer(
+        bgcolor=SURFACE,
         controls=[
-            ft.Container(height=12),
+            ft.Container(
+                padding=ft.Padding.only(left=16, right=16, top=16, bottom=12),
+                border=ft.Border.only(bottom=ft.BorderSide(1, BORDER_SOFT)),
+                content=ft.Row(
+                    spacing=10,
+                    vertical_alignment=ft.CrossAxisAlignment.CENTER,
+                    controls=[
+                        ft.Container(
+                            width=34,
+                            height=34,
+                            border_radius=10,
+                            alignment=ft.Alignment.CENTER,
+                            bgcolor=PRIMARY_BLUE,
+                            content=ft.Icon(
+                                ft.Icons.APPS, color=ft.Colors.WHITE, size=18
+                            ),
+                        ),
+                        ft.Column(
+                            spacing=0,
+                            controls=[
+                                ft.Text(
+                                    "Menü",
+                                    weight=ft.FontWeight.BOLD,
+                                    color=TEXT_DARK,
+                                ),
+                            ],
+                        ),
+                    ],
+                ),
+            ),
             ft.NavigationDrawerDestination(
                 label="Anasayfa",
                 icon=ft.Icons.DOOR_BACK_DOOR_OUTLINED,
@@ -874,41 +923,61 @@ def main(page: ft.Page):
 
     page.add(
         ft.AppBar(
-            leading=ft.IconButton(ft.Icons.MENU, on_click=handle_show_drawer),
+            leading=ft.IconButton(ft.Icons.APPS, on_click=handle_show_drawer),
             title=ft.Row(
                 expand=True,
+                vertical_alignment=ft.CrossAxisAlignment.CENTER,
                 controls=[
-                    ft.Text("Database Management"),
                     ft.Container(
                         expand=True,
                         alignment=ft.Alignment.CENTER,
-                        content=ft.Row(
-                            spacing=12,
-                            alignment=ft.MainAxisAlignment.CENTER,
-                            vertical_alignment=ft.CrossAxisAlignment.CENTER,
-                            controls=[
-                                ft.Column(
-                                    spacing=0,
-                                    horizontal_alignment=ft.CrossAxisAlignment.CENTER,
-                                    controls=[
-                                        active_db_text,
-                                        active_schema_text,
-                                        active_warn_text,
-                                    ],
-                                ),
-                                ft.OutlinedButton(
-                                    "Degistir", on_click=open_change_active_dialog
-                                ),
-                                ft.OutlinedButton(
-                                    "Temizle", on_click=clear_active_db_scope
-                                ),
-                            ],
+                        content=ft.Container(
+                            padding=ft.Padding.only(left=14, right=14, top=8, bottom=8),
+                            border_radius=14,
+                            bgcolor="#D9FFFFFF",
+                            border=ft.border.all(1, BORDER_SOFT),
+                            content=ft.Row(
+                                tight=True,
+                                spacing=12,
+                                alignment=ft.MainAxisAlignment.CENTER,
+                                vertical_alignment=ft.CrossAxisAlignment.CENTER,
+                                controls=[
+                                    ft.Column(
+                                        spacing=0,
+                                        horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+                                        controls=[
+                                            active_db_text,
+                                            active_schema_text,
+                                            active_warn_text,
+                                        ],
+                                    ),
+                                    ft.ElevatedButton(
+                                        "Degistir",
+                                        icon=ft.Icons.SYNC_ALT,
+                                        style=ft.ButtonStyle(
+                                            bgcolor=PRIMARY_BLUE,
+                                            color=ft.Colors.WHITE,
+                                        ),
+                                        on_click=open_change_active_dialog,
+                                    ),
+                                    ft.OutlinedButton(
+                                        "Temizle",
+                                        icon=ft.Icons.CLEAR_ALL,
+                                        style=ft.ButtonStyle(
+                                            color=PRIMARY_GREEN,
+                                            side=ft.BorderSide(1, PRIMARY_GREEN),
+                                        ),
+                                        on_click=clear_active_db_scope,
+                                    ),
+                                ],
+                            ),
                         ),
                     ),
                 ],
             ),
-            actions=[ft.IconButton(ft.Icons.SWITCH_RIGHT)],  # sağ üstteki ikon
-            bgcolor=ft.Colors.SURFACE_CONTAINER,
+            actions=[ft.IconButton(ft.Icons.SWITCH_RIGHT, icon_color=ft.Colors.WHITE)],
+            bgcolor=PRIMARY_BLUE,
+            center_title=False,
         )
     )
     _update_active_header()

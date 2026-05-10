@@ -55,7 +55,7 @@ def build_dbdeletefeature_view(page: ft.Page) -> ft.Control:
 
     debug_bar = ft.Container(
         padding=ft.Padding.only(left=16, right=16, top=10, bottom=10),
-        border=ft.border.only(top=ft.BorderSide(1, ft.Colors.BLACK12)),
+        border=ft.Border.only(top=ft.BorderSide(1, ft.Colors.BLACK12)),
         bgcolor=ft.Colors.WHITE,
         content=ft.Row(
             controls=[busy, busy_text, ft.Container(expand=True), debug_lbl],

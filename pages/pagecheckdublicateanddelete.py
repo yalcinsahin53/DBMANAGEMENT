@@ -163,7 +163,7 @@ def build_checkdublicateanddelete_view(page: ft.Page) -> ft.Control:
             return ft.Container(
                 width=width,
                 padding=ft.Padding.only(left=8, right=8, top=6, bottom=6),
-                border=ft.border.only(right=ft.BorderSide(1, ft.Colors.BLACK12)),
+                border=ft.Border.only(right=ft.BorderSide(1, ft.Colors.BLACK12)),
                 bgcolor=ft.Colors.BLUE_50 if header else None,
                 content=ft.Text(
                     text,
@@ -175,7 +175,7 @@ def build_checkdublicateanddelete_view(page: ft.Page) -> ft.Control:
         header_cells = [_cell(col, col_width[col], header=True) for col in columns]
         detail_rows.append(
             ft.Container(
-                border=ft.border.only(bottom=ft.BorderSide(1, ft.Colors.BLACK12)),
+                border=ft.Border.only(bottom=ft.BorderSide(1, ft.Colors.BLACK12)),
                 content=ft.Row(wrap=False, spacing=0, controls=header_cells),
             )
         )
@@ -184,7 +184,7 @@ def build_checkdublicateanddelete_view(page: ft.Page) -> ft.Control:
             ft.Container(
                 width=130,
                 padding=ft.Padding.only(left=6, right=6, top=6, bottom=6),
-                border=ft.border.only(bottom=ft.BorderSide(1, ft.Colors.BLACK12)),
+                border=ft.Border.only(bottom=ft.BorderSide(1, ft.Colors.BLACK12)),
                 bgcolor=ft.Colors.BLUE_50,
                 alignment=ft.Alignment.CENTER,
                 content=ft.Text("Islem", weight=ft.FontWeight.BOLD),
@@ -204,7 +204,7 @@ def build_checkdublicateanddelete_view(page: ft.Page) -> ft.Control:
 
             detail_rows.append(
                 ft.Container(
-                    border=ft.border.only(bottom=ft.BorderSide(1, ft.Colors.BLACK12)),
+                    border=ft.Border.only(bottom=ft.BorderSide(1, ft.Colors.BLACK12)),
                     content=ft.Row(wrap=False, spacing=0, controls=row_cells),
                 )
             )
@@ -213,7 +213,7 @@ def build_checkdublicateanddelete_view(page: ft.Page) -> ft.Control:
                 ft.Container(
                     width=130,
                     padding=ft.Padding.only(left=6, right=6, top=6, bottom=6),
-                    border=ft.border.only(bottom=ft.BorderSide(1, ft.Colors.BLACK12)),
+                    border=ft.Border.only(bottom=ft.BorderSide(1, ft.Colors.BLACK12)),
                     alignment=ft.Alignment.CENTER,
                     content=ft.ElevatedButton(
                         "Veri Sil",
@@ -608,7 +608,7 @@ def build_checkdublicateanddelete_view(page: ft.Page) -> ft.Control:
 
     debug_bar = ft.Container(
         padding=ft.Padding.only(left=16, right=16, top=10, bottom=10),
-        border=ft.border.only(top=ft.BorderSide(1, ft.Colors.BLACK12)),
+        border=ft.Border.only(top=ft.BorderSide(1, ft.Colors.BLACK12)),
         bgcolor=ft.Colors.WHITE,
         content=ft.Row(
             controls=[busy, busy_text, ft.Container(expand=True), debug_lbl],
