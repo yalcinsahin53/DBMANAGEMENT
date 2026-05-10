@@ -1,0 +1,351 @@
+<FeatureclassMenuScreen>:
+    name: "featureclassmenu"
+
+    MDBoxLayout:
+        orientation: "vertical"
+        padding: 0, 0, 0, 0  # tüm boşluklar sıfırlandı
+        spacing: dp(0)
+        
+        MDAnchorLayout:  # ekran boyutunu kullansın
+            anchor_y: "top"  # içerik yukarı hizalansın
+            padding:0, dp(64), 0, 0                     
+
+            MDAnchorLayout:  # ekran boyutunu kullansın
+                anchor_y: "top"  # içerik yukarı hizalansın
+                anchor_x: "center"
+                md_bg_color: 1, 1, 1, 1
+
+                MDBoxLayout:
+                    id:verigirisbolumu
+                    orientation: "horizontal"
+                    spacing: dp(24)
+                    padding: dp(48), dp(48), dp(48), dp(0)  # (left, top, right, bottom)
+                    size_hint_x: None
+                    height: self.minimum_height
+                    adaptive_height: True
+                    adaptive_width: True
+
+                    MDTextField:
+                        id: conn_dropdown
+                        mode: "outlined"
+                        size_hint_x: None
+                        width: "400dp"
+                        readonly: True
+                        on_focus: if self.focus: root.open_conn_menu()
+
+                        MDTextFieldHintText:
+                            text: "Bağlantı Seçimi"
+
+                        MDTextFieldHelperText:
+                            text: "Kayıtlı bağlantılardan seçim yapınız!"
+                            mode: "persistent"
+
+                    MDTextField:
+                        id: schema_dropdown
+                        mode: "outlined"
+                        size_hint_x: None
+                        width: "400dp"
+                        readonly: True
+                        on_focus: if self.focus: root.build_schema_menu()
+
+                        MDTextFieldHintText:
+                            text: "Şema Seçimi"
+
+                        MDTextFieldHelperText:
+                            text: "Kayıtlı şemalardan seçim yapınız!"
+                            mode: "persistent"
+
+
+                MDBoxLayout:
+                    orientation: "vertical"
+                    size_hint_y: None
+                    height: self.minimum_height
+                    spacing: dp(20)
+                    padding: dp(0), dp(164), dp(0), dp(60)     # (left, top, right, bottom)
+                    pos_hint: {"center_x": 0.5}
+
+                            
+                    MDButton:
+                        id: createfeature_btn
+                        style: "filled"
+                        pos_hint: {"center_x": 0.5}
+                        width: dp(200)
+                        md_bg_color: 1, 1, 1, 1
+                        disabled: True  # başlangıçta buton pasif
+                        on_release: root.create_feature_dataset()
+
+                        MDButtonText:
+                            text: "Veri Seti Oluştur"
+                            
+                                                    
+                    MDButton:
+                        id: addfield_btn
+                        style: "filled"
+                        pos_hint: {"center_x": 0.5}
+                        width: dp(200)
+                        md_bg_color: 1, 1, 1, 1
+                        MDButtonText:
+                            text: "Alan Adı Ekle"
+
+                    MDButton:
+                        id: detelefield_btn
+                        style: "filled"
+                        pos_hint: {"center_x": 0.5}
+                        width: dp(200)
+                        md_bg_color: 1, 1, 1, 1
+                        MDButtonText:
+                            text: "Alan Adı Sil"
+
+<CustomFieldPopup@BoxLayout>:
+    MDBoxLayout:
+        id: content
+        orientation: "vertical"
+        spacing: dp(24)
+        size_hint: 1, None             # birinci koordinat: x ekseninde parent kadar
+        height: self.minimum_height
+        padding: dp(24), dp(16)       # yatayda ve dikeyde biraz iç boşluk
+
+
+        MDTextField:
+            id: field_name
+            mode: "outlined"
+            size_hint_x: None
+            width: "400dp"
+            size_hint_x: .9            # parent genişliğinin %90’ı
+            pos_hint: {"center_x": .5} # yatay ortala
+
+            MDTextFieldHintText:
+                text: "Alan Adı Girin"
+
+            MDTextFieldHelperText:
+                text: "Alan Adını Giriş Yapınız!"
+                mode: "persistent"
+
+        MDTextField:
+            id: field_alias
+            mode: "outlined"
+            size_hint_x: None
+            width: "400dp"
+            size_hint_x: .9            # parent genişliğinin %90’ı
+            pos_hint: {"center_x": .5} # yatay ortala
+
+            MDTextFieldHintText:
+                text: "Alan Etiketi Girin"
+
+            MDTextFieldHelperText:
+                text: "Alan Adı Etiketi Giriş Yapınız!"
+                mode: "persistent"
+
+        MDTextField:
+            id: field_type
+            mode: "outlined"
+            size_hint_x: None
+            width: "400dp"
+            size_hint_x: .9            # parent genişliğinin %90’ı
+            pos_hint: {"center_x": .5} # yatay ortala
+            
+            MDTextFieldHintText:
+                text: "Alan Tipini Girin"
+
+            MDTextFieldHelperText:
+                text: "Alan Tipini Giriş Yapınız!"
+                mode: "persistent"
+
+        MDTextField:
+            id: field_length
+            mode: "outlined"
+            size_hint_x: None
+            width: "400dp"
+            size_hint_x: .9            # parent genişliğinin %90’ı
+            pos_hint: {"center_x": .5} # yatay ortala
+            input_filter: "int"
+
+            MDTextFieldHintText:
+                text: "Alan Uzunluğu Girin"
+
+            MDTextFieldHelperText:
+                text: "Alan Uzunluğu Giriş Yapınız!"
+                mode: "persistent"
+
+
+#:import MDTopAppBar kivymd.uix.appbar.MDTopAppBar
+#:import dp kivy.metrics.dp
+#:import Spinner kivy.uix.spinner.Spinner
+
+
+<FeatureclassWizardScreen>:
+    name: "featureclasswizard"
+    MDBoxLayout:
+        orientation: "vertical"
+        padding: 0, 0, 0, 0  # tüm boşluklar sıfırlandı
+        spacing: dp(0)
+        
+        MDAnchorLayout:  # ekran boyutunu kullansın
+            anchor_y: "top"  # içerik yukarı hizalansın
+            padding:0, dp(64), 0, 0                     
+
+            MDAnchorLayout:  # ekran boyutunu kullansın
+                anchor_y: "top"  # içerik yukarı hizalansın
+                anchor_x: "center"
+                md_bg_color: 1, 1, 1, 1
+
+                ScreenManager:
+                    id: sm
+
+                    # 1) Bağlantı & Şema seçimi
+                    MDScreen:
+                        name: "page1"
+                        MDBoxLayout:
+                            orientation: "vertical"
+                            padding: dp(24)
+                            spacing: dp(36)
+
+                            # Bağlantı & Şema bilgileri
+                            MDCard:
+                                elevation: 2
+                                radius: dp(12)
+                                padding: dp(48)
+                                spacing: dp(32)
+                                size_hint_y: None
+                                height: self.minimum_height
+                                orientation: "vertical"
+                                
+                                MDLabel:
+                                    text: "[b]Bağlantı:[/b] " + root.sel_connection
+                                    markup: True
+                                    style: "H6"
+
+                                MDLabel:
+                                    text: "[b]Şema:[/b] " + root.sel_schema
+                                    markup: True
+                                    style: "H6" 
+
+                            # Feature Class Adı
+                            MDTextField:
+                                id: fc_name
+                                text: root.fc_name
+                                on_text: root.fc_name = self.text
+                                size_hint_x: 0.8
+                                pos_hint: {"center_x": 0.5}
+                    
+                                MDTextFieldHintText:
+                                    text: "Veri Seti Adı"
+
+                                MDTextFieldHelperText:
+                                    text: "Kayıt İçin Veri Seti Adını Giriniz!"
+                                    mode: "persistent"
+
+                            # Alias / Etiket
+                            MDTextField:
+                                id: fc_alias
+                                text: root.fc_alias
+                                on_text: root.fc_alias = self.text
+                                size_hint_x: 0.8
+                                pos_hint: {"center_x": 0.5}
+                                
+                                MDTextFieldHintText:
+                                    text: "Etiket Bilgisi"
+
+                                MDTextFieldHelperText:
+                                    text: "Kayıt İçin Etiket Bilgisi Giriniz!"
+                                    mode: "persistent"
+
+                            MDLabel:
+                                text: "Geometri Tipi ve Koordinat Sistemi Seçimi"
+                                markup: True
+                                size_hint_y: None
+                                style: "H6"
+                            MDBoxLayout:
+                                orientation: "horizontal"
+                                spacing: dp(16)
+                                size_hint_y: None
+                                height: dp(48)
+                                pos_hint: {"center_x": 0.5}
+
+                                Spinner:
+                                    text: root.sel_geom
+                                    values: root.geom_types
+                                    size_hint_x: None
+                                    width: dp(200)
+                                    on_text: root.sel_geom = self.text
+
+                                Spinner:
+                                    text: root.sel_crs
+                                    values: root.coord_systems
+                                    size_hint_x: None
+                                    width: dp(200)
+                                    on_text: root.sel_crs = self.text
+
+                            MDBoxLayout:
+                                orientation: "horizontal"
+                                spacing: dp(32)
+                                size_hint_y: None
+                                height: dp(48)
+                                pos_hint: {"center_x": 0.5}
+
+                                MDButton:
+                                    id:page1_previous_btn
+                                    style: "filled"
+                                    on_release: root.prev_step()
+                                    size_hint: None, None
+                                    size: dp(100), dp(48)
+                                    disabled:True
+                                    MDButtonText:
+                                        text: "Geri"
+                                MDButton:
+                                    id:page1_next_btn
+                                    style: "filled"
+                                    on_release: root.next_step()
+                                    size_hint: None, None
+                                    size: dp(100), dp(48)
+                                    MDButtonText:
+                                        text: "İleri"
+
+                    # 3) Alan Adı Ekleme
+                    MDScreen:
+                        name: "page2"
+                        MDBoxLayout:
+                            orientation: "vertical"
+                            padding: dp(24)
+                            spacing: dp(12)
+
+                            MDLabel:
+                                text: "2. Adım: Alan Ekleme"
+                                style: "H6"
+
+                            # Birden çok giriş için RecycleView veya MDList kullanabilirsiniz. Basit örnek:
+                            RecycleView:
+                                viewclass: "OneLineListItem"
+                                data: [{"text": f["name"] + " (" + f["type"] + ")"} for f in root.fields]
+                                size_hint_y: None
+                                height: dp(200)
+
+                            MDButton:
+                                id: add_newfield_btn
+                                style: "filled"
+                                on_release:
+                                    # bir dialog açıp kullanıcıyı form doldurmaya yönlendirirsiniz
+                                    root.open_field_dialog(title="Yeni Alan Ekle")
+                                MDButtonText:
+                                    text: "Yeni Alan Ekle"
+
+                            MDBoxLayout:
+                                size_hint: None, None    # hem x hem y için None
+                                height: dp(48)           # yükseklik 48dp
+                                spacing: dp(12)
+                                MDButton:
+                                    id:page2_previous_btn
+                                    style: "filled"
+                                    on_release: root.prev_step()  
+                                    size_hint: None, None
+                                    size: dp(100), dp(48) 
+                                    MDButtonText:
+                                        text: "Geri" 
+                                MDButton:
+                                    id:page2_create_btn
+                                    style: "filled"
+                                    on_release: root.finish_and_create()
+                                    size_hint: None, None
+                                    size: dp(100), dp(48)
+                                    MDButtonText:
+                                        text: "Oluştur"

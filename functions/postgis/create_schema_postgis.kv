@@ -1,0 +1,94 @@
+<CreateSchemaPostgisScreen>:
+    name: "createschemapostgis"
+
+    MDBoxLayout:
+        orientation: "vertical"
+        padding: 0, 0, 0, 0  # tüm boşluklar sıfırlandı
+        spacing: dp(0)
+        
+        MDAnchorLayout:  # ekran boyutunu kullansın
+            anchor_y: "top"  # içerik yukarı hizalansın
+            padding:0, dp(64), 0, 0                     
+
+            MDAnchorLayout:  # ekran boyutunu kullansın
+                anchor_y: "top"  # içerik yukarı hizalansın
+                anchor_x: "center"
+                md_bg_color: 1, 1, 1, 1
+
+                MDBoxLayout:
+                    id:verigirisbolumu
+                    orientation: "vertical"
+                    spacing: dp(64)
+                    padding: dp(48), dp(48), dp(48), dp(0)  # (left, top, right, bottom)
+                    size_hint_x: None
+                    height: self.minimum_height
+                    adaptive_height: True
+                    adaptive_width: True
+
+                    MDTextField:
+                        id: conn_dropdown
+                        mode: "outlined"
+                        size_hint_x: None
+                        width: "400dp"
+                        readonly: True
+                        on_focus: if self.focus: root.open_conn_menu()
+
+                        MDTextFieldHintText:
+                            text: "Bağlantı Seçimi"
+
+                        MDTextFieldHelperText:
+                            text: "Kayıtlı bağlantılardan seçim yapınız!"
+                            mode: "persistent"
+
+                    MDTextField:
+                        id: schema_dropdown
+                        mode: "outlined"
+                        size_hint_x: None
+                        width: "400dp"
+                        readonly: True
+                        on_focus: if self.focus: root.open_schema_menu()
+
+                        MDTextFieldHintText:
+                            text: "Şema Seçimi"
+
+                        MDTextFieldHelperText:
+                            text: "Kayıtlı şemalardan seçim yapınız!"
+                            mode: "persistent"
+
+                    MDTextField:
+                        id: custom_schema_name
+                        mode: "outlined"
+                        size_hint_x: None
+                        width: "400dp"
+                        disabled: True
+
+                        MDTextFieldHintText:
+                            text: "Diğer Veritabanı Seçimi"
+
+                        MDTextFieldHelperText:
+                            text: "Diğer Veritabanı şemalardan seçim yapınız!"
+                            mode: "persistent"
+
+        MDBoxLayout:
+            id:butonlar
+            orientation: "horizontal"
+            spacing: dp(36)
+            padding: dp(48), dp(0), dp(48), dp(24)  # (left, top, right, bottom)
+            size_hint_y: None
+            height: self.minimum_height
+            md_bg_color: 1, 1, 1, 1 
+
+            Widget:  # Sol boşluk
+
+            
+            MDButton:
+                id: create_schema_btn
+                style: "filled"
+                size_hint_x: None
+                width: dp(200)
+                on_release: root.createschemapostgis()
+                md_bg_color: 1, 1, 1, 1
+                MDButtonText:
+                    text: "Şablon Oluştur"
+
+            Widget:  # Sol boşluk

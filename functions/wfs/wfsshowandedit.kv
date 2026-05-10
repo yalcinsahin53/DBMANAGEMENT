@@ -1,0 +1,149 @@
+<WFSShowAndEditScreen>:
+    name: "wfsshowandedit"
+
+    MDBoxLayout:
+        orientation: "vertical"
+        padding: 0, 0, 0, 0  # tüm boşluklar sıfırlandı
+        spacing: dp(0)
+        
+        MDAnchorLayout:  # ekran boyutunu kullansın
+            anchor_y: "top"  # içerik yukarı hizalansın
+            padding:0, dp(64), 0, 0                     
+
+            MDAnchorLayout:  # ekran boyutunu kullansın
+                anchor_y: "top"  # içerik yukarı hizalansın
+                anchor_x: "center"
+                md_bg_color: 1, 1, 1, 1
+
+                #: import dp kivy.metrics.dp
+
+                MDBoxLayout:
+                    id:veriguncellemebolumu
+                    orientation: "horizontal"
+                    spacing: dp(10)
+                    padding: dp(10)
+                    
+                    MDBoxLayout:
+                        orientation:"vertical"
+                        size_hint_x: 1          # Yatayda tam genişlik
+                        pos_hint: {"x": 0}      # Sola yasla (size_hint_x=1 ile zaten hem sola hem sağa yaslı olur)
+                        
+                        MDLabel:
+                            text: "Görüntülemek/Güncellemek İçin WFS Bağlantı Seçin"
+                            halign: "center"
+                            font_style: "Title"
+                            role: "medium"
+                            size_hint_y: None
+                            height: self.texture_size[1]
+
+                        # — Sol: Bağlantı listesi —
+                        MDScrollView:
+                            size_hint_x: 1          # Yatayda tam genişlik
+                            pos_hint: {"x": 0}      # Sola yasla (size_hint_x=1 ile zaten hem sola hem sağa yaslı olur)
+                            do_scroll_x: False      # Sadece dikey kaydırma
+                            bar_width: "8dp"
+                            bar_color: 0, 0, 0, 0.4   # Siyah scroll bar
+                            MDList:
+                                id: connection_list
+
+                    # — Sağ: Detay + butonlar —
+                    MDBoxLayout:
+                        orientation: "vertical"
+                        padding: dp(10)
+                        spacing: dp(20)
+                        pos_hint: {"x": 0.5}      # Sola yasla (size_hint_x=1 ile zaten hem sola hem sağa yaslı olur)
+                        
+
+                        MDTextField:
+                            id: conn_name
+                            mode: "outlined"
+                            size_hint_x: None
+                            width: "300dp"
+                            disabled: True
+
+                            MDTextFieldHintText:
+                                text: "Conn Name"
+
+                        MDTextField:
+                            id: urladress
+                            mode: "outlined"
+                            size_hint_x: None
+                            width: "300dp"
+                            disabled: True
+
+                            MDTextFieldHintText:
+                                text: "URL Adress"
+
+                        MDTextField:
+                            id: username
+                            mode: "outlined"
+                            size_hint_x: None
+                            width: "300dp"
+                            disabled: True
+
+                            MDTextFieldHintText:
+                                text: "User"
+
+                        MDTextField:
+                            id: password
+                            mode: "outlined"
+                            size_hint_x: None
+                            width: "300dp"
+                            disabled: True
+                            password: True
+
+                            MDTextFieldHintText:
+                                text: "Password"
+
+                        Widget:
+                            size_hint_y: None
+                            height: dp(10)
+
+
+        MDBoxLayout:
+            id:butonlar
+            orientation: "horizontal"
+            spacing: dp(36)
+            padding: dp(48), dp(0), dp(48), dp(24)  # (left, top, right, bottom)
+            size_hint_y: None
+            height: self.minimum_height
+            md_bg_color: 1, 1, 1, 1 
+
+            Widget:  # Sol boşluk
+
+            
+            MDButton:
+                id: wfs_update_btn
+                style: "filled"
+                size_hint_x: None
+                width: dp(200)
+                disabled:True
+                on_release: root.enable_editing()
+                md_bg_color: 1, 1, 1, 1
+                MDButtonText:
+                    text: "GÜncelle"
+
+            MDButton:
+                id: wfs_save_btn
+                style: "filled"
+                size_hint_x: None
+                width: dp(200)
+                disabled:True
+                on_release: root.save_changes()
+                md_bg_color: 1, 1, 1, 1
+                MDButtonText:
+                    text: "Güncellemeleri Kaydet"
+
+            MDButton:
+                id: wfs_check_btn
+                style: "filled"
+                size_hint_x: None
+                width: dp(200)
+                disabled:True
+                on_release: root.wfs_check_connection()
+                md_bg_color: 1, 1, 1, 1
+                MDButtonText:
+                    text: "Bağlatıyı Kontrol Et"
+
+
+            Widget:  # Sol boşluk

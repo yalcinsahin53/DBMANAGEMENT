@@ -1,0 +1,20 @@
+Screen:
+    name: "createschemaesri"
+         
+    MDBoxLayout:
+        orientation: "vertical"
+        padding: 0, 0, 0, 0  # tüm boşluklar sıfırlandı
+        spacing: dp(0)
+        
+        MDAnchorLayout:  # ekran boyutunu kullansın
+            anchor_y: "top"  # içerik yukarı hizalansın
+            padding:0, dp(64), 0, 0                     
+
+            MDAnchorLayout:  # ekran boyutunu kullansın
+                anchor_y: "top"  # içerik yukarı hizalansın
+                anchor_x: "center"
+                md_bg_color: 1, 1, 1, 1
+
+                MDLabel:
+                    text: "Ana İçerik (Main Screen)"
+                    halign: "center"

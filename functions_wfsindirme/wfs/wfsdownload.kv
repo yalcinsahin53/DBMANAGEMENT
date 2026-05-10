@@ -1,0 +1,212 @@
+# satır şablonu: yazı + checkbox
+<RVValueItem@BoxLayout>:
+    text: ""
+    active: False
+    size_hint_y: None
+    height: dp(44)
+    padding: dp(12), 0
+    spacing: dp(12)
+    Label:
+        text: root.text if root.text is not None else ""
+        text_size: self.size
+        halign: "left"
+        valign: "middle"
+        shorten: True
+    CheckBox:
+        id: cb
+        size_hint_x: None
+        width: dp(36)
+        active: root.active
+        on_active:
+            app.root.get_screen("wfsdownload").on_checkbox_toggle(root.text, self.active)
+
+
+
+<WFSDownloadScreen>:
+    name: "wfsdownload"
+
+    MDBoxLayout:
+        orientation: "vertical"
+        padding: 0, 0, 0, 0  # tüm boşluklar sıfırlandı
+        spacing: dp(0)
+        
+        MDAnchorLayout:  # ekran boyutunu kullansın
+            anchor_y: "top"  # içerik yukarı hizalansın
+            padding:0, dp(64), 0, 0                     
+
+            MDAnchorLayout:  # ekran boyutunu kullansın
+                anchor_y: "top"  # içerik yukarı hizalansın
+                anchor_x: "center"
+                md_bg_color: 1, 1, 1, 1
+
+                MDBoxLayout:
+                    id:verigirisbolumu
+                    orientation: "vertical"
+                    spacing: dp(64)
+                    padding: dp(48), dp(48), dp(48), dp(0)  # (left, top, right, bottom)
+                    size_hint_x: None
+                    height: self.minimum_height
+                    adaptive_height: True
+                    adaptive_width: True
+
+                    MDTextField:
+                        id: wfsconn_dropdown
+                        mode: "outlined"
+                        size_hint_x: None
+                        width: "400dp"
+                        readonly: True
+                        on_focus: if self.focus: root.open_wfsconn_menu()
+
+                        MDTextFieldHintText:
+                            text: "Bağlantı Seçimi"
+
+                        MDTextFieldHelperText:
+                            text: "Kayıtlı bağlantılardan seçim yapınız!"
+                            mode: "persistent"
+
+                    MDBoxLayout:
+                        id:butonlar
+                        orientation: "horizontal"
+                        size_hint_y: None
+                        height: self.minimum_height
+                        
+                        spacing: dp(36) 
+                        md_bg_color: 1, 1, 1, 1 
+
+                        MDTextField:
+                            id: wfstypenamelist_dropdown
+                            mode: "outlined"
+                            size_hint_x: None
+                            width: "400dp"
+                            readonly: True
+                            on_focus: if self.focus: root.open_wfstypenamelist_menu()
+
+                            MDTextFieldHintText:
+                                text: "Veri Seti Seçimi"
+
+                            MDTextFieldHelperText:
+                                text: "Servis edilen verisetlerinden seçim yapınız!"
+                                mode: "persistent"
+                                           
+                        MDButton:
+                            id: btn_download_wfs_data
+                            style: "filled"
+                            size_hint_x: None
+                            width: dp(200)
+                            disabled: 'True'
+                            on_release: root.pick_export_folder()
+                            md_bg_color: 1, 1, 1, 1
+                            MDButtonText:
+                                text: "Veri Seti İndir"
+
+                        MDButton:
+                            id: btn_add_fieldquery
+                            style: "filled"
+                            size_hint_x: None
+                            width: dp(200)
+                            disabled: 'True'
+                            md_bg_color: 1, 1, 1, 1
+                            on_release: root.on_add_fieldquery()
+                            MDButtonText:
+                                text: "Filtre Ekle"
+
+                    MDBoxLayout:
+                        id:butonlar
+                        orientation: "horizontal"
+                        size_hint_y: None
+                        height: self.minimum_height
+                        
+                        spacing: dp(36) 
+                        md_bg_color: 1, 1, 1, 1 
+
+                        MDTextField:
+                            id: wfsfieldnamelist_dropdown
+                            mode: "outlined"
+                            size_hint_x: None
+                            width: "400dp"
+                            disabled: 'True'
+                            readonly: True
+                            on_focus: if self.focus: root.open_fieldnamelist_menu()
+
+                            MDTextFieldHintText:
+                                text: "Alan Adı Seçimi"
+
+                            MDTextFieldHelperText:
+                                text: "Veri setindenden alan adı seçim yapınız!"
+                                mode: "persistent"
+
+                        MDButton:
+                            id: btn_listfield_values
+                            style: "filled"
+                            size_hint_x: None
+                            width: dp(200)
+                            disabled: 'True'
+                            md_bg_color: 1, 1, 1, 1
+                            on_release: root.on_listfield_values()
+                            MDButtonText:
+                                text: "Listede Göster"
+
+                           
+                                        
+                    # Liste paneli (başta gizli)
+                    BoxLayout:
+                        id: field_values_panel
+                        orientation: "vertical"
+                        size_hint_y: None
+                        height: 0         # gizli
+                        opacity: 0
+                        padding: dp(8)
+                        spacing: dp(8)
+
+                        # Başlık + kapat
+                        BoxLayout:
+                            size_hint_y: None
+                            height: dp(40)
+                            Label:
+                                text: "Değer Seçimi"
+                                bold: True
+                            Widget:
+                            MDButton:
+                                style: "text"
+                                on_release: root.hide_field_values_panel()
+                                MDButtonText:
+                                    text: "Kapat"
+
+                        # Liste
+                        RecycleView:
+                            id: values_rv
+                            viewclass: "RVValueItem"
+                            scroll_type: ['bars', 'content']
+                            bar_width: dp(6)
+                            RecycleBoxLayout:
+                                default_size: None, dp(44)
+                                default_size_hint: 1, None
+                                size_hint_y: None
+                                height: self.minimum_height
+                                orientation: 'vertical'
+
+
+
+        MDBoxLayout:
+            id:butonlar
+            orientation: "horizontal"
+            spacing: dp(36)
+            padding: dp(48), dp(0), dp(48), dp(24)  # (left, top, right, bottom)
+            size_hint_y: None
+            height: self.minimum_height
+            md_bg_color: 1, 1, 1, 1 
+
+            Widget:  # Sol boşluk
+
+            
+            MDButton:
+                id: create_schema_btn
+                style: "filled"
+                size_hint_x: None
+                width: dp(200)
+                on_release: root.createschemapostgis()
+                md_bg_color: 1, 1, 1, 1
+                MDButtonText:
+                    text: "Şablon Oluştur"
+
+            Widget:  # Sol boşluk

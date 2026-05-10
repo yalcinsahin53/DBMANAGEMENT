@@ -1,0 +1,113 @@
+<WFSCheckScreen>:
+    name: "wfscheck"
+
+    MDBoxLayout:
+        orientation: "vertical"
+        padding: 0, 0, 0, 0  # tüm boşluklar sıfırlandı
+        spacing: dp(0)
+        
+        MDAnchorLayout:  # ekran boyutunu kullansın
+            anchor_y: "top"  # içerik yukarı hizalansın
+            padding:0, dp(64), 0, 0                     
+
+            MDAnchorLayout:  # ekran boyutunu kullansın
+                anchor_y: "top"  # içerik yukarı hizalansın
+                anchor_x: "center"
+                md_bg_color: 1, 1, 1, 1
+
+                MDBoxLayout:
+                    id:verigirisbolumu
+                    orientation: "vertical"
+                    spacing: dp(32)
+                    padding: dp(48), dp(8), dp(48), dp(0)  # (left, top, right, bottom)
+                    size_hint_x: None
+                    height: self.minimum_height
+                    adaptive_height: True
+                    adaptive_width: True
+
+                    MDTextField:
+                        id: conn_name
+                        mode: "outlined"
+                        size_hint_x: None
+                        width: "400dp"
+
+                        MDTextFieldHintText:
+                            text: "Bağlantı Adı Giriniz!"
+
+                        MDTextFieldHelperText:
+                            text: "Bağlantı kayıt işlemi için ad giriniz"
+                            mode: "persistent"
+
+                    MDTextField:
+                        id: urladress
+                        mode: "outlined"
+                        size_hint_x: None
+                        width: "400dp"
+
+                        MDTextFieldHintText:
+                            text: "Bağlantı Adresi Giriniz!"
+
+                        MDTextFieldHelperText:
+                            text: "Bağlantı Kontrol/Kayıt İşlemi İçin Adres (URL) Bilgisi Giriniz!"
+                            mode: "persistent"
+
+                    MDTextField:
+                        id: username
+                        mode: "outlined"
+                        size_hint_x: None
+                        width: "400dp"
+
+                        MDTextFieldHintText:
+                            text: "Kullanıcı Adı"
+
+                        MDTextFieldHelperText:
+                            text: "Bağlantı kullanıcı adı giriniz"
+                            mode: "persistent"
+
+                    MDTextField:
+                        id: password
+                        mode: "outlined"
+                        size_hint_x: None
+                        width: "400dp"
+                        password:True
+
+                        MDTextFieldHintText:
+                            text: "Şifre"
+
+                        MDTextFieldHelperText:
+                            text: "Bağlantı şifresi giriniz"
+                            mode: "persistent"
+
+        MDBoxLayout:
+            id:butonlar
+            orientation: "horizontal"
+            spacing: dp(36)
+            padding: dp(48), dp(12), dp(48), dp(24)  # (left, top, right, bottom)
+            size_hint_y: None
+            height: self.minimum_height
+            md_bg_color: 1, 1, 1, 1 
+
+            Widget:  # Sol boşluk
+            
+            MDButton:
+                id:wfs_check_button
+                style: "filled"
+                size_hint_x: None
+                width: dp(200)
+                on_release: root.wfs_check_connection()
+                md_bg_color: 1, 1, 1, 1
+                MDButtonText:
+                    text: "Bağlantıyı Kontrol Et"
+
+            MDButton:
+                id: wfs_save_button
+                style: "filled"
+                size_hint_x: None
+                width: dp(200)
+                on_release: root.wfs_save_connection()
+                md_bg_color: 1, 1, 1, 1
+                disabled:True
+                MDButtonText:
+                    text: "Bağlantıyı Kaydet"
+
+            Widget:  # Sol boşluk
